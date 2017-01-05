@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shah.divyam.movies.MovieDetailActivity">
+
+    <ImageView
+        android:id="@+id/imgv_poster_detail_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@android:mipmap/sym_def_app_icon"/>
+    <LinearLayout
+        android:id="@+id/ll_rating_date"
+        android:layout_below="@id/imgv_poster_detail_activity"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <ScrollView
+        android:layout_below="@id/ll_rating_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="srdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkllsrdfghkjkll"
+            android:id="@+id/tv_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+</RelativeLayout>
