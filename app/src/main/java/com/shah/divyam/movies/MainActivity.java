@@ -28,13 +28,16 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements MovieListAdapter.ListItemClickListener {
 
-    RecyclerView mRvMovieList;
-    MovieListAdapter mMovieListAdapter;
+    String mApiKey = ApiKey.key;
+
+    RecyclerView mRecyclerViewPopular;
+    RecyclerView mRecyclerViewTopRated;
+
+    MovieListAdapter mAdapterPopular;
+    MovieListAdapter mAdapterTopRated;
 
     String[] mPopularMovieList ;
     String[] mTopRatedMovieList;
-
-    String mApiKey = ApiKey.key;
 
     Movie[] mDetailMovieListPopular;
     Movie[] mDetailMovieListTopRated;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
     String popularMovieUrl = "http://api.themoviedb.org/3/movie/popular?api_key="+mApiKey ;
     String topRatedMovieUrl = "http://api.themoviedb.org/3/movie/top_rated?api_key="+mApiKey;
+
     MovieListTask mPopularTask = new MovieListTask();
     MovieListTask mTopRatedTask = new MovieListTask();
 
@@ -71,15 +75,20 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         Log.d("Divz",mTopRatedMovieList.length+" ");
 
 
-        mRvMovieList = (RecyclerView) findViewById(R.id.rv_movie_list_grid);
-        mMovieListAdapter = new MovieListAdapter(MainActivity.this,mDetailMovieListPopular,MainActivity.this);
+        mRecyclerViewPopular = (RecyclerView) findViewById(R.id.rv_movie_list_grid);
+        mRecyclerViewTopRated = (RecyclerView) findViewById(R.id.rv_movie_list_grid_pop);
 
-
-
+        mAdapterPopular = new MovieListAdapter(MainActivity.this,mDetailMovieListPopular,MainActivity.this);
         GridLayoutManager manager = new GridLayoutManager(MainActivity.this,2);
+        mRecyclerViewPopular.setLayoutManager(manager);
+        mRecyclerViewPopular.setAdapter(mAdapterPopular);
 
-        mRvMovieList.setLayoutManager(manager);
-        mRvMovieList.setAdapter(mMovieListAdapter);
+        mAdapterTopRated = new MovieListAdapter(MainActivity.this,mDetailMovieListTopRated,MainActivity.this);
+        GridLayoutManager managerTop = new GridLayoutManager(MainActivity.this,2);
+        mRecyclerViewPopular.setLayoutManager(managerTop);
+        mRecyclerViewPopular.setAdapter(mAdapterTopRated);
+
+
 
 
     }
@@ -98,12 +107,12 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         switch(itemID){
             case R.id.action_polpular:
-                mMovieListAdapter = new MovieListAdapter(MainActivity.this,mDetailMovieListPopular,MainActivity.this);
-                mRvMovieList.setAdapter(mMovieListAdapter);
+                mRecyclerViewTopRated.setVisibility(View.INVISIBLE);
+                mRecyclerViewPopular.setVisibility(View.VISIBLE);
                 break;
             case R.id.action_top_rating:
-                mMovieListAdapter = new MovieListAdapter(MainActivity.this,mDetailMovieListTopRated,MainActivity.this);
-                mRvMovieList.setAdapter(mMovieListAdapter);
+                mRecyclerViewPopular.setVisibility(View.INVISIBLE);
+                mRecyclerViewTopRated.setVisibility(View.VISIBLE);
                 break;
         }
 
@@ -113,8 +122,14 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     @Override
     public void onClick(int position) {
         Intent intent = new Intent(this, MovieDetailActivity.class);
+        Movie movie = null;
+        if(mRecyclerViewPopular.getVisibility()==View.VISIBLE) {
+            movie = mDetailMovieListPopular[position];
+        }
+        else if(mRecyclerViewTopRated.getVisibility()==View.VISIBLE){
+            movie = mDetailMovieListTopRated[position];
+        }
 
-        Movie movie = mDetailMovieListPopular[position];
         intent.putExtra("rating",movie.rating);
         intent.putExtra("overview",movie.overview);
         intent.putExtra("release",movie.releaseDate);

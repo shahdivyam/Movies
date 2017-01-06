@@ -7,12 +7,21 @@
             tools:context="com.shah.divyam.movies.MainActivity">
 
             <android.support.v7.widget.RecyclerView
+                android:visibility="visible"
                 android:id="@+id/rv_movie_list_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
 
-            <android.support.v4.widget.ContentLoadingProgressBar
+            <android.support.v7.widget.RecyclerView
+                android:visibility="invisible"
+                android:id="@+id/rv_movie_list_grid_pop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+         </android.support.v7.widget.RecyclerView>
+
+
+    <android.support.v4.widget.ContentLoadingProgressBar
                 android:id="@+id/loading_list_activity"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="50dp"
