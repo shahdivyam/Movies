@@ -2,12 +2,16 @@ package com.shah.divyam.movies.Utils;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.shah.divyam.movies.MainActivity;
+import com.shah.divyam.movies.Movie;
 import com.shah.divyam.movies.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by divyam on 1/5/17.
@@ -16,9 +20,15 @@ import com.shah.divyam.movies.R;
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieItemViewHolder> {
 
     final ListItemClickListener mListItemClickListener;
-
-    public MovieListAdapter(ListItemClickListener mListItemClickListener) {
+    String halfUrl = "http://image.tmdb.org/t/p/w185/";
+    String[] posterPath;
+    Context context;
+    Movie[] mMovieList;
+    //constructor
+    public MovieListAdapter(ListItemClickListener mListItemClickListener , Movie[]movieId, Context c) {
         this.mListItemClickListener = mListItemClickListener;
+        this.context = c;
+        mMovieList = movieId;
     }
 
     @Override
@@ -35,12 +45,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public void onBindViewHolder(MovieListAdapter.MovieItemViewHolder holder, int position) {
-        holder.mImageView.setImageResource(R.drawable.sample2);
+        ImageView iv = holder.mImageView;
+        //Picasso.with(context).load(android_versions.get(i).getAndroid_image_url()).resize(120, 60).into(viewHolder.img_android);
+        Picasso.with(context).setLoggingEnabled(true);
+        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath).into(iv);
+        iv.setImageResource(R.drawable.sample2);
 
+        Log.d("Hey",position + " : " + mMovieList[position].imgPath);
     }
+    // change this value;
     @Override
     public int getItemCount() {
-        return 10;
+        return 12;
     }
 
     public interface ListItemClickListener{

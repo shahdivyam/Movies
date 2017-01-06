@@ -12,6 +12,7 @@
         android:src="@android:mipmap/sym_def_app_icon"/>
     <LinearLayout
         android:id="@+id/ll_rating_date"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/imgv_poster_detail_activity"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -20,13 +21,16 @@
 
         <TextView
             android:id="@+id/tv_rating"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_release_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -34,8 +38,11 @@
 
         android:layout_below="@id/ll_rating_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp">
         <TextView
+            android:textSize="15dp"
+            android:text="every body gets dinner at 8"
             android:id="@+id/tv_overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
