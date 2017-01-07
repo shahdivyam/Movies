@@ -28,6 +28,6 @@
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:visibility="invisible" />
+                android:visibility="visible" />
 
         </RelativeLayout>

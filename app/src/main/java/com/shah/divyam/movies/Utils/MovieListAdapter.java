@@ -25,10 +25,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     Context context;
     Movie[] mMovieList;
     //constructor
-    public MovieListAdapter(ListItemClickListener mListItemClickListener , Movie[]movieId, Context c) {
+    public MovieListAdapter(ListItemClickListener mListItemClickListener , Movie[]movieList, Context c) {
         this.mListItemClickListener = mListItemClickListener;
         this.context = c;
-        mMovieList = movieId;
+        mMovieList = movieList;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         ImageView iv = holder.mImageView;
         //Picasso.with(context).load(android_versions.get(i).getAndroid_image_url()).resize(120, 60).into(viewHolder.img_android);
         Picasso.with(context).setLoggingEnabled(true);
-        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath).into(iv);
+        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath).resize(500,500).into(iv);
         iv.setImageResource(R.drawable.sample2);
 
         Log.d("Hey",position + " : " + mMovieList[position].imgPath);
@@ -56,11 +56,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     // change this value;
     @Override
     public int getItemCount() {
-        return 12;
+        return 6;
     }
 
     public interface ListItemClickListener{
-        public void onClick(int position);
+         void onClick(int position,ImageView imageView);
     }
 
     public class MovieItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -75,7 +75,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            mListItemClickListener.onClick(position);
+            mListItemClickListener.onClick(position,mImageView);
         }
     }
 

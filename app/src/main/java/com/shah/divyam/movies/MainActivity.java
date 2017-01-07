@@ -7,6 +7,7 @@ import com.shah.divyam.movies.Utils.MovieIDJsonUtil;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -57,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("Popular Movies");
+
+        findViewById(R.id.loading_list_activity).setVisibility(View.VISIBLE);
 
         try {
             mPopularMovieList =  mPopularTask.execute(popularMovieUrl).get();
@@ -82,12 +87,14 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         GridLayoutManager manager = new GridLayoutManager(MainActivity.this,2);
         mRecyclerViewPopular.setLayoutManager(manager);
         mRecyclerViewPopular.setAdapter(mAdapterPopular);
+        mRecyclerViewPopular.setVisibility(View.VISIBLE);
 
         mAdapterTopRated = new MovieListAdapter(MainActivity.this,mDetailMovieListTopRated,MainActivity.this);
-        GridLayoutManager managerTop = new GridLayoutManager(MainActivity.this,2);
-        mRecyclerViewPopular.setLayoutManager(managerTop);
-        mRecyclerViewPopular.setAdapter(mAdapterTopRated);
+        GridLayoutManager manager2 = new GridLayoutManager(MainActivity.this,2);
 
+        mRecyclerViewTopRated.setLayoutManager(manager2);
+        mRecyclerViewTopRated.setAdapter(mAdapterTopRated);
+        mRecyclerViewTopRated.setVisibility(View.INVISIBLE);
 
 
 
@@ -107,20 +114,23 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         switch(itemID){
             case R.id.action_polpular:
+                getSupportActionBar().setTitle("Popular Movies");
                 mRecyclerViewTopRated.setVisibility(View.INVISIBLE);
                 mRecyclerViewPopular.setVisibility(View.VISIBLE);
                 break;
             case R.id.action_top_rating:
+                getSupportActionBar().setTitle("Top Rated Movies");
                 mRecyclerViewPopular.setVisibility(View.INVISIBLE);
                 mRecyclerViewTopRated.setVisibility(View.VISIBLE);
                 break;
         }
+        // TODO bull's eye ;
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onClick(int position) {
+    public void onClick(int position, ImageView imageView) {
         Intent intent = new Intent(this, MovieDetailActivity.class);
         Movie movie = null;
         if(mRecyclerViewPopular.getVisibility()==View.VISIBLE) {
@@ -130,13 +140,17 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
             movie = mDetailMovieListTopRated[position];
         }
 
+
+        intent.putExtra("imgUrl","http://image.tmdb.org/t/p/w185/"+movie.imgPath);
+
         intent.putExtra("rating",movie.rating);
         intent.putExtra("overview",movie.overview);
         intent.putExtra("release",movie.releaseDate);
         intent.putExtra("title",movie.title);
+
         startActivity(intent);
 
-        Toast.makeText(MainActivity.this, ": "+position, Toast.LENGTH_SHORT).show();
+
     }
 
     public class MovieListTask extends AsyncTask<String,Void,String[]>{
@@ -147,13 +161,13 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         @Override
         protected void onPreExecute() {
-            //findViewById(R.id.loading_list_activity).setVisibility(View.VISIBLE);
+            findViewById(R.id.loading_list_activity).setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(String[] strings) {
-            //findViewById(R.id.loading_list_activity).setVisibility(View.INVISIBLE);
+            findViewById(R.id.loading_list_activity).setVisibility(View.INVISIBLE);
             super.onPostExecute(strings);
         }
 
