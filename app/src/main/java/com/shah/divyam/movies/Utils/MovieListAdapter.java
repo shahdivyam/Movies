@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
 import com.shah.divyam.movies.MainActivity;
 import com.shah.divyam.movies.Movie;
 import com.shah.divyam.movies.R;
@@ -46,19 +48,21 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public void onBindViewHolder(MovieListAdapter.MovieItemViewHolder holder, int position) {
-        ImageView iv = holder.mImageView;
+        ImageView imageView = holder.mImageView;
+        //Glide.with(context).load("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath).into(imageView);
+       new DownloadImageTask(imageView,holder.mImageProgress).execute("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath);
+
         //Picasso.with(context).load(android_versions.get(i).getAndroid_image_url()).resize(120, 60).into(viewHolder.img_android);
-        Picasso.with(context).setLoggingEnabled(true);
+       // Picasso.with(context).setLoggingEnabled(true);
        // Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath).resize(500,500).into(iv);
-        iv.setImageResource(R.drawable.sample2);
+       //imageView.setImageResource(R.drawable.sample2);
 
        // Log.d("Hey",position + " : " + mMovieList[position].imgPath);
     }
     // change this value;
     @Override
     public int getItemCount() {
-        return 10;
-               // mMovieList.length;
+        return mMovieList.length;
     }
 
     public interface ListItemClickListener{
@@ -67,11 +71,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     public class MovieItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView mImageView;
-
+        public ProgressBar mImageProgress;
         public MovieItemViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             mImageView = (ImageView) itemView.findViewById(R.id.imgv_movie_image);
+            mImageProgress = (ProgressBar) itemView.findViewById(R.id.loading_image);
         }
 
         @Override

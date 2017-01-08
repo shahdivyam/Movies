@@ -1,10 +1,6 @@
 package com.shah.divyam.movies;
 
 import com.shah.divyam.movies.Utils.*;
-import com.shah.divyam.movies.Utils.NetworkUtils;
-import com.shah.divyam.movies.Utils.MovieIDJsonUtil;
-
-
 
 import android.content.Intent;
 import android.graphics.Bitmap;
