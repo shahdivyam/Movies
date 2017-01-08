@@ -24,6 +24,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     String[] posterPath;
     Context context;
     Movie[] mMovieList;
+
     //constructor
     public MovieListAdapter(ListItemClickListener mListItemClickListener , Movie[]movieList, Context c) {
         this.mListItemClickListener = mListItemClickListener;
@@ -48,19 +49,20 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         ImageView iv = holder.mImageView;
         //Picasso.with(context).load(android_versions.get(i).getAndroid_image_url()).resize(120, 60).into(viewHolder.img_android);
         Picasso.with(context).setLoggingEnabled(true);
-        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath).resize(500,500).into(iv);
+       // Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath).resize(500,500).into(iv);
         iv.setImageResource(R.drawable.sample2);
 
-        Log.d("Hey",position + " : " + mMovieList[position].imgPath);
+       // Log.d("Hey",position + " : " + mMovieList[position].imgPath);
     }
     // change this value;
     @Override
     public int getItemCount() {
-        return 6;
+        return 10;
+               // mMovieList.length;
     }
 
     public interface ListItemClickListener{
-         void onClick(int position,ImageView imageView);
+         void onClick(int position,Movie movie);
     }
 
     public class MovieItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -75,7 +77,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            mListItemClickListener.onClick(position,mImageView);
+            Movie movie = mMovieList[position];
+            mListItemClickListener.onClick(position,movie);
         }
     }
 

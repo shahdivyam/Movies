@@ -32,70 +32,48 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
     String mApiKey = ApiKey.key;
 
-    RecyclerView mRecyclerViewPopular;
-    RecyclerView mRecyclerViewTopRated;
+    public static int option;
+
+    RecyclerView mRecyclerView;
 
     MovieListAdapter mAdapterPopular;
     MovieListAdapter mAdapterTopRated;
 
-    String[] mPopularMovieList ;
-    String[] mTopRatedMovieList;
+    String[] mPopularMovieList =null;
+    String[] mTopRatedMovieList = null;
 
-    Movie[] mDetailMovieListPopular;
-    Movie[] mDetailMovieListTopRated;
+    Movie[] mDetailMovieListPopular = null;
+    Movie[] mDetailMovieListTopRated = null;
 
 
-    String popularMovieUrl = "http://api.themoviedb.org/3/movie/popular?api_key="+mApiKey ;
-    String topRatedMovieUrl = "http://api.themoviedb.org/3/movie/top_rated?api_key="+mApiKey;
+    String popularMovieUrl = "http://api.themoviedb.org/3/movie/popular?api_key=" + mApiKey;
+    String topRatedMovieUrl = "http://api.themoviedb.org/3/movie/top_rated?api_key=" + mApiKey;
 
     MovieListTask mPopularTask = new MovieListTask();
     MovieListTask mTopRatedTask = new MovieListTask();
 
-    MovieDetailTask mMovieDetailTask = new MovieDetailTask();
     MovieDetailTask mMovieDetailTaskPop = new MovieDetailTask();
+    MovieDetailTask mMovieDetailTaskTopRated = new MovieDetailTask();
 
-
+    public static int pop = 0;
+    public static int top = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("Popular Movies");
+        getSupportActionBar().setWindowTitle("Popular");
 
-        findViewById(R.id.loading_list_activity).setVisibility(View.VISIBLE);
 
         try {
-            mPopularMovieList =  mPopularTask.execute(popularMovieUrl).get();
-
+            mPopularMovieList = mPopularTask.execute(popularMovieUrl).get();
             mTopRatedMovieList = mTopRatedTask.execute(topRatedMovieUrl).get();
-
-            mDetailMovieListPopular = mMovieDetailTask.execute(mPopularMovieList).get();
-            mDetailMovieListTopRated = mMovieDetailTaskPop.execute(mTopRatedMovieList).get();
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        Log.d("Divz",mPopularMovieList.length+" ");
-        Log.d("Divz",mTopRatedMovieList.length+" ");
 
-
-        mRecyclerViewPopular = (RecyclerView) findViewById(R.id.rv_movie_list_grid);
-        mRecyclerViewTopRated = (RecyclerView) findViewById(R.id.rv_movie_list_grid_pop);
-
-        mAdapterPopular = new MovieListAdapter(MainActivity.this,mDetailMovieListPopular,MainActivity.this);
-        GridLayoutManager manager = new GridLayoutManager(MainActivity.this,2);
-        mRecyclerViewPopular.setLayoutManager(manager);
-        mRecyclerViewPopular.setAdapter(mAdapterPopular);
-        mRecyclerViewPopular.setVisibility(View.VISIBLE);
-
-        mAdapterTopRated = new MovieListAdapter(MainActivity.this,mDetailMovieListTopRated,MainActivity.this);
-        GridLayoutManager manager2 = new GridLayoutManager(MainActivity.this,2);
-
-        mRecyclerViewTopRated.setLayoutManager(manager2);
-        mRecyclerViewTopRated.setAdapter(mAdapterTopRated);
-        mRecyclerViewTopRated.setVisibility(View.INVISIBLE);
-
+        new MovieDetailTask().execute(mPopularMovieList);
 
 
     }
@@ -109,37 +87,29 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int itemID = item.getItemId();
-
         switch(itemID){
             case R.id.action_polpular:
-                getSupportActionBar().setTitle("Popular Movies");
-                mRecyclerViewTopRated.setVisibility(View.INVISIBLE);
-                mRecyclerViewPopular.setVisibility(View.VISIBLE);
+                new MovieDetailTask().execute(mPopularMovieList);
+                Toast.makeText(MainActivity.this, "Popular", Toast.LENGTH_SHORT).show();
+                getSupportActionBar().setWindowTitle("Popular Movies");
                 break;
+                
             case R.id.action_top_rating:
-                getSupportActionBar().setTitle("Top Rated Movies");
-                mRecyclerViewPopular.setVisibility(View.INVISIBLE);
-                mRecyclerViewTopRated.setVisibility(View.VISIBLE);
+                Toast.makeText(MainActivity.this,"Top Rated,",Toast.LENGTH_SHORT).show();
+                getSupportActionBar().setWindowTitle("Top Rated Movies");
+                new MovieDetailTaskTopRated().execute(mTopRatedMovieList);
                 break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
         // TODO bull's eye ;
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onClick(int position, ImageView imageView) {
+    public void onClick(int position,Movie movie) {
         Intent intent = new Intent(this, MovieDetailActivity.class);
-        Movie movie = null;
-        if(mRecyclerViewPopular.getVisibility()==View.VISIBLE) {
-            movie = mDetailMovieListPopular[position];
-        }
-        else if(mRecyclerViewTopRated.getVisibility()==View.VISIBLE){
-            movie = mDetailMovieListTopRated[position];
-        }
-
 
         intent.putExtra("imgUrl","http://image.tmdb.org/t/p/w185/"+movie.imgPath);
 
@@ -147,9 +117,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         intent.putExtra("overview",movie.overview);
         intent.putExtra("release",movie.releaseDate);
         intent.putExtra("title",movie.title);
-
         startActivity(intent);
-
 
     }
 
@@ -159,15 +127,16 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
             super();
         }
 
+
         @Override
         protected void onPreExecute() {
-            findViewById(R.id.loading_list_activity).setVisibility(View.VISIBLE);
             super.onPreExecute();
+            findViewById(R.id.loading_list_activity).setVisibility(View.VISIBLE);
+
         }
 
         @Override
         protected void onPostExecute(String[] strings) {
-            findViewById(R.id.loading_list_activity).setVisibility(View.INVISIBLE);
             super.onPostExecute(strings);
         }
 
@@ -187,11 +156,10 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
             return retval;
         }
     }
+
     public class MovieDetailTask extends AsyncTask<String[],Void,Movie[]>{
         @Override
         protected void onPreExecute() {
@@ -203,7 +171,15 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         @Override
         protected void onPostExecute(Movie[] movies) {
             super.onPostExecute(movies);
-            findViewById(R.id.loading_list_activity).setVisibility(View.INVISIBLE);
+
+                findViewById(R.id.loading_list_activity).setVisibility(View.INVISIBLE);
+
+                mRecyclerView = (RecyclerView) findViewById(R.id.rv_movie_list_grid);
+                mAdapterPopular = new MovieListAdapter(MainActivity.this, movies, MainActivity.this);
+                GridLayoutManager manager = new GridLayoutManager(MainActivity.this, 2);
+                mRecyclerView.setLayoutManager(manager);
+                mRecyclerView.setAdapter(mAdapterPopular);
+
         }
 
         @Override
@@ -213,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
             int size = movieId.length;
             Movie[] retval = new Movie[size];
 
-            for(int i=0;i<size-1;i++){
+            for(int i=0;i<size;i++){
                 String strUrl = "https://api.themoviedb.org/3/movie/"+movieId[i]+"?api_key="+ApiKey.key;
                 URL url = NetworkUtils.buildUrl(strUrl);
                 String strResponse =null;
@@ -222,14 +198,59 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 try {
                     retval[i] = MovieIDJsonUtil.getMovieDetailsFromJson(strResponse);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
 
+            return retval;
+        }
+    }
+    public class MovieDetailTaskTopRated extends AsyncTask<String[],Void,Movie[]>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            findViewById(R.id.loading_list_activity).setVisibility(View.VISIBLE);
 
+        }
+
+        @Override
+        protected void onPostExecute(Movie[] movies) {
+            super.onPostExecute(movies);
+
+            findViewById(R.id.loading_list_activity).setVisibility(View.INVISIBLE);
+
+            mRecyclerView = (RecyclerView) findViewById(R.id.rv_movie_list_grid);
+            mAdapterPopular = new MovieListAdapter(MainActivity.this, movies, MainActivity.this);
+            GridLayoutManager manager = new GridLayoutManager(MainActivity.this, 2);
+            mRecyclerView.setLayoutManager(manager);
+            mRecyclerView.setAdapter(mAdapterPopular);
+
+        }
+
+        @Override
+        protected Movie[] doInBackground(String[]... params) {
+            String[] movieId = params[0];
+
+            int size = movieId.length;
+            Movie[] retval = new Movie[size];
+
+            for(int i=0;i<size;i++){
+                String strUrl = "https://api.themoviedb.org/3/movie/"+movieId[i]+"?api_key="+ApiKey.key;
+                URL url = NetworkUtils.buildUrl(strUrl);
+                String strResponse =null;
+                try {
+                    strResponse = NetworkUtils.getResponseFromHttpUrl(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    retval[i] = MovieIDJsonUtil.getMovieDetailsFromJson(strResponse);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             return retval;

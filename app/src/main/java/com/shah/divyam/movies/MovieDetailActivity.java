@@ -2,8 +2,10 @@ package com.shah.divyam.movies;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
+        Display display = getWindowManager().getDefaultDisplay();
+
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
         Intent intent = getIntent();
 
         imgPath = intent.getStringExtra("imgUrl");
@@ -37,7 +46,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Picasso.with(this).setLoggingEnabled(true);
 
-        Picasso.with(this).load(imgPath).resize(0,500).into(imgbanner);
+        Picasso.with(this).load(imgPath).resize(width,height/3).into(imgbanner);
 
 
         getSupportActionBar().setTitle(title);
