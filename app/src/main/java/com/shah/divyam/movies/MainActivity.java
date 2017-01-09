@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
     String[] mPopularMovieList =null;
     String[] mTopRatedMovieList = null;
-
     Movie[] mDetailMovieListPopular = null;
     Movie[] mDetailMovieListTopRated = null;
 

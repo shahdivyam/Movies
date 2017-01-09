@@ -1,8 +1,10 @@
 package com.shah.divyam.movies.Utils;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +51,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     @Override
     public void onBindViewHolder(MovieListAdapter.MovieItemViewHolder holder, int position) {
         ImageView imageView = holder.mImageView;
-        //Glide.with(context).load("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath).into(imageView);
+//        Display display = context.getWindowManager().getDefaultDisplay();
+//
+//        Point size = new Point();
+//        display.getSize(size);
+//        int width = size.x;
+//        int height = size.y;
+//        //Glide.with(context).load("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath).into(imageView);
        new DownloadImageTask(imageView,holder.mImageProgress).execute("http://image.tmdb.org/t/p/w185/"+mMovieList[position].imgPath);
 
         //Picasso.with(context).load(android_versions.get(i).getAndroid_image_url()).resize(120, 60).into(viewHolder.img_android);

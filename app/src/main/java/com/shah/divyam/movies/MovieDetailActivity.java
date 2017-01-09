@@ -39,17 +39,20 @@ public class MovieDetailActivity extends AppCompatActivity {
         overview = intent.getStringExtra("overview");
         releaseDate = intent.getStringExtra("release");
 
+        TextView tvtitle = (TextView) findViewById(R.id.tv_title);
         TextView tvrating = (TextView) findViewById(R.id.tv_rating);
         TextView tvoverview = (TextView) findViewById(R.id.tv_overview);
         TextView tvreleaseDate = (TextView) findViewById(R.id.tv_release_date);
         ImageView imgbanner = (ImageView) findViewById(R.id.imgv_poster_detail_activity);
 
         Picasso.with(this).setLoggingEnabled(true);
+        int w = (int) (width*0.4);
 
-        Picasso.with(this).load(imgPath).resize(width,height/3).into(imgbanner);
+        Picasso.with(this).load(imgPath).resize(w,height/3).into(imgbanner);
 
 
-        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setTitle("Movie Details");
+        tvtitle.setText(title);
         tvrating.setText(rating);
         tvoverview.setText(overview);
         tvreleaseDate.setText(releaseDate);

@@ -1,50 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.shah.divyam.movies.MovieDetailActivity">
 
-    <ImageView
-        android:id="@+id/imgv_poster_detail_activity"
+    <TextView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@android:mipmap/sym_def_app_icon"/>
+        android:layout_height="100dp"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:text="Title"
+        android:background="@color/Cyan"
+        android:textSize="40sp"/>
+
     <LinearLayout
-        android:id="@+id/ll_rating_date"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/imgv_poster_detail_activity"
+        android:id="@+id/ll_details"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="250dp"
+        android:layout_below="@id/tv_title"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="8">
 
-        <TextView
-            android:id="@+id/tv_rating"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:textColor="@color/black"/>
+            android:layout_weight="3">
+            <ImageView
+                android:layout_margin="10dp"
+                android:id="@+id/imgv_poster_detail_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@android:mipmap/sym_def_app_icon"/>
+        </FrameLayout>
 
-        <TextView
-            android:id="@+id/tv_release_date"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:textColor="@color/black"/>
+            android:layout_weight="5">
+
+            <TextView
+                android:id="@+id/tv_favourite"
+                android:text="Star"
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_release_date"
+                android:text="Date"
+                android:paddingTop="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:paddingTop="120dp"
+                android:id="@+id/tv_rating"
+                android:text="Rating"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:paddingTop="180dp"
+                android:id="@+id/tv_duration"
+                android:text="Duration"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"/>
+
+        </FrameLayout>
+
     </LinearLayout>
 
-    <ScrollView
-
-        android:layout_below="@id/ll_rating_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20sp">
-        <TextView
+    <TextView
+            android:layout_below="@id/ll_details"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:text="every body gets dinner at 8"
@@ -52,6 +94,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </ScrollView>
-
+    <TextView
+        android:layout_marginTop="4dp"
+        android:layout_below="@id/tv_overview"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"/>
 </RelativeLayout>
+
+</ScrollView>
