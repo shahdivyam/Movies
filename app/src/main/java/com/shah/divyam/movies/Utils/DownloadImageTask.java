@@ -37,7 +37,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             mIcon11 = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
-            e.printStackTrace();
+
         }
         return mIcon11;
     }
@@ -45,7 +45,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     protected void onPostExecute(Bitmap result) {
         bmImage.setImageBitmap(result);
         mImageProgress.setVisibility(View.INVISIBLE);
-        Log.d("Divimage","Done");
+
     }
 }
 
