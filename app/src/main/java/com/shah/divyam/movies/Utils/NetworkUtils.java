@@ -14,6 +14,7 @@ import java.util.Scanner;
  */
 public class NetworkUtils {
 
+    // Used for building URL ;
     public static URL buildUrl(String str){
 
         URL url = null;
@@ -28,6 +29,7 @@ public class NetworkUtils {
         return url;
 
     }
+    // getting response from URL passed to the function ;
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
